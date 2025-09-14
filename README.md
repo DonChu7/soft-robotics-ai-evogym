@@ -82,6 +82,24 @@ actuator commands (expand/contract). The simulator returns a **reward** (e.g., f
 (reinforcement learning), the policy is updated to increase future reward. Over many steps, the robot discovers a **gait**.
 The outputs (`ppo_evogym_walker.zip`, `robot.npz`) let you replay the learned behavior.
 
+## PPO Explained
+
+**PPO (Proximal Policy Optimization)** is the reinforcement learning algorithm we use here.
+
+- **Policy optimization**: The “brain” is a policy network (a neural net mapping state → action). PPO tunes this network to maximize reward.  
+- **Proximal**: PPO only allows *small, safe updates* (by clipping changes), so the policy doesn’t forget what it already learned.  
+- **How it works (loop):**
+  1. Collect rollouts (robot interacts with env).
+  2. Compute advantages (which actions were better than expected).
+  3. Update the policy network with a clipped loss, so changes stay close to the old policy.
+  4. Repeat → the robot learns gradually.
+
+- **Why it’s good:** PPO is stable, efficient, and simple. It’s widely used in robotics and games.  
+- **In this demo:** PPO learns actuator patterns that move the voxel-based body forward — discovering a gait without us programming it.
+
+👉 A good way to say it in talks:  
+*“PPO is like teaching the robot by trial and error, but with training wheels — each update is small and safe, so the robot steadily improves without losing what it already knows.”*
+
 ## Troubleshooting
 
 - **Window doesn’t render (macOS):** `pip install pyglet` (already in requirements). Ensure scripts use `render_mode="human"` for live windows or `"rgb_array"` for offscreen capture.
