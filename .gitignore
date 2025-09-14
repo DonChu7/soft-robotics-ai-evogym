@@ -3,8 +3,6 @@ __pycache__/
 *.pyo
 *.pyd
 *.pkl
-*.npz
-*.zip
 *.gif
 *.mp4
 *.log
